@@ -6,21 +6,22 @@ import {
   FaChartBar,
   FaFolder,
 } from "react-icons/fa";
+import Logo from "../../assets/logo.png";
 
 import { Link } from "react-router-dom";
 
 const Sidebar = () => {
   return (
-    <div className="w-64 h-screen bg-slate-900 text-white fixed">
-      <div className="p-5 text-2xl font-bold border-b border-slate-700">
-        DGROW ERP
+    <div className="w-64 h-screen bg-black text-white fixed">
+      <div className="p-5 py-0 text-2xl font-bold border-b border-red-700">
+        <img className="w-32" src={Logo} alt="" />
       </div>
 
       <ul className="mt-5">
         <li>
           <Link
-            to="/admin"
-            className="flex items-center gap-3 px-5 py-3 hover:bg-slate-800"
+            to="/admin/dashboard"
+            className="flex items-center gap-3 px-5 py-3 hover:bg-red-800"
           >
             <FaChartBar />
             Dashboard
@@ -30,7 +31,7 @@ const Sidebar = () => {
         <li>
           <Link
             to="/admin/employees"
-            className="flex items-center gap-3 px-5 py-3 hover:bg-slate-800"
+            className="flex items-center gap-3 px-5 py-3 hover:bg-red-800"
           >
             <FaUsers />
             Employees
@@ -40,7 +41,7 @@ const Sidebar = () => {
         <li>
           <Link
             to="/admin/clients"
-            className="flex items-center gap-3 px-5 py-3 hover:bg-slate-800"
+            className="flex items-center gap-3 px-5 py-3 hover:bg-red-800"
           >
             <FaUserTie />
             Clients
@@ -49,7 +50,7 @@ const Sidebar = () => {
         <li>
           <Link
             to="/admin/projects"
-            className="flex items-center gap-3 px-5 py-3 hover:bg-slate-800"
+            className="flex items-center gap-3 px-5 py-3 hover:bg-red-800"
           >
             <FaFolder />
             Projects
@@ -58,26 +59,26 @@ const Sidebar = () => {
         <li>
           <Link
             to="/admin/tasks"
-            className="flex items-center gap-3 px-5 py-3 hover:bg-slate-800"
+            className="flex items-center gap-3 px-5 py-3 hover:bg-red-800"
           >
             <FaTasks />
             Tasks
           </Link>
         </li>
 
-        <li>
+        {/* <li>
           <Link
             to="/admin/create-meeting"
-            className="flex items-center gap-3 px-5 py-3 hover:bg-slate-800"
+            className="flex items-center gap-3 px-5 py-3 hover:bg-red-800"
           >
             <FaCalendarAlt />
             Meetings
           </Link>
-        </li>
+        </li> */}
         <li>
           <Link
             to="/admin/meeting-requests"
-            className="flex items-center gap-3 px-5 py-3 hover:bg-slate-800"
+            className="flex items-center gap-3 px-5 py-3 hover:bg-red-800"
           >
             <FaCalendarAlt /> Meeting Requests
           </Link>

@@ -90,14 +90,14 @@ const ClientLayout = ({ children }) => {
             </Link>
           </li>
 
-          <li>
+          {/* <li>
             <Link
               to="/client/request-meeting"
               className="flex items-center gap-3 px-5 py-3 rounded hover:bg-slate-800"
             >
               <FaCalculator /> Request Meeting
             </Link>
-          </li>
+          </li> */}
 
           {/* Change Password */}
 

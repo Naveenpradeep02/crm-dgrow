@@ -9,18 +9,16 @@ import { createMeeting } from "../../services/meetingService";
 
 const CreateMeeting = () => {
   const { id } = useParams();
-
   const navigate = useNavigate();
 
   const [employees, setEmployees] = useState([]);
-
   const [selectedEmployees, setSelectedEmployees] = useState([]);
-
   const [loading, setLoading] = useState(true);
 
   const [form, setForm] = useState({
-    request_id: id,
+    request_id: "",
     client_id: "",
+    company_name: "",
     title: "",
     description: "",
     meeting_type: "Online",
@@ -34,35 +32,47 @@ const CreateMeeting = () => {
     try {
       const requestRes = await getMeetingRequests();
 
-      const request = requestRes.data.find((item) => item.id === Number(id));
+      console.log("Route ID:", id);
+      console.log("Meeting Requests:", requestRes.data);
 
-      if (request) {
-        setForm({
-          request_id: request.id,
-          client_id: request.client_id,
-          title: request.title,
-          description: request.description,
-          meeting_type: request.request_type,
-          meeting_date: request.preferred_date,
-          meeting_time: request.preferred_time,
-          meeting_link: "",
-          location: request.location || "",
-        });
+      const request = requestRes.data.find(
+        (item) => Number(item.id) === Number(id),
+      );
+
+      console.log("Found Request:", request);
+
+      if (!request) {
+        alert("Meeting Request Not Found");
+        navigate("/admin/meeting-requests");
+        return;
       }
 
-      const employeeRes = await getEmployees();
+      setForm({
+        request_id: request.id,
+        client_id: request.client_id,
+        company_name: request.company_name || "",
+        title: request.title || "",
+        description: request.description || "",
+        meeting_type: request.request_type || "Online",
+        meeting_date: request.preferred_date || "",
+        meeting_time: request.preferred_time || "",
+        meeting_link: "",
+        location: request.location || "",
+      });
 
+      const employeeRes = await getEmployees();
       setEmployees(employeeRes.data);
 
       setLoading(false);
     } catch (error) {
       console.log(error);
+      setLoading(false);
     }
   };
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [id]);
 
   const handleChange = (e) => {
     setForm({
@@ -83,9 +93,18 @@ const CreateMeeting = () => {
     e.preventDefault();
 
     try {
+      if (!form.client_id) {
+        return alert("Client ID Missing");
+      }
+
       if (selectedEmployees.length === 0) {
         return alert("Please Select At Least One Employee");
       }
+
+      console.log({
+        ...form,
+        employees: selectedEmployees,
+      });
 
       await createMeeting({
         ...form,
@@ -98,7 +117,11 @@ const CreateMeeting = () => {
     } catch (error) {
       console.log(error);
 
-      alert(error.response?.data?.message || "Something Went Wrong");
+      alert(
+        error.response?.data?.sqlMessage ||
+          error.response?.data?.message ||
+          "Something Went Wrong",
+      );
     }
   };
 
@@ -116,8 +139,6 @@ const CreateMeeting = () => {
         <h1 className="text-3xl font-bold mb-6">Schedule Meeting</h1>
 
         <form onSubmit={handleSubmit} className="grid grid-cols-2 gap-4">
-          {/* Title */}
-
           <input
             type="text"
             name="title"
@@ -128,8 +149,6 @@ const CreateMeeting = () => {
             required
           />
 
-          {/* Type */}
-
           <select
             name="meeting_type"
             value={form.meeting_type}
@@ -137,11 +156,8 @@ const CreateMeeting = () => {
             onChange={handleChange}
           >
             <option value="Online">Online</option>
-
             <option value="Offline">Offline</option>
           </select>
-
-          {/* Date */}
 
           <input
             type="date"
@@ -152,8 +168,6 @@ const CreateMeeting = () => {
             required
           />
 
-          {/* Time */}
-
           <input
             type="time"
             name="meeting_time"
@@ -163,8 +177,6 @@ const CreateMeeting = () => {
             required
           />
 
-          {/* Description */}
-
           <textarea
             name="description"
             value={form.description}
@@ -173,8 +185,6 @@ const CreateMeeting = () => {
             rows="4"
             onChange={handleChange}
           />
-
-          {/* Online Meeting */}
 
           {form.meeting_type === "Online" && (
             <input
@@ -188,8 +198,6 @@ const CreateMeeting = () => {
             />
           )}
 
-          {/* Offline Meeting */}
-
           {form.meeting_type === "Offline" && (
             <input
               type="text"
@@ -201,17 +209,17 @@ const CreateMeeting = () => {
               required
             />
           )}
+
           <div className="col-span-2">
             <label className="block mb-2 font-semibold">Client</label>
 
             <input
               type="text"
-              value={form.company_name || ""}
+              value={form.company_name}
               className="border p-3 rounded w-full bg-gray-100"
               readOnly
             />
           </div>
-          {/* Employee Selection */}
 
           <div className="col-span-2 border rounded p-4">
             <h3 className="font-bold mb-3">Select Employees</h3>
@@ -224,14 +232,11 @@ const CreateMeeting = () => {
                     checked={selectedEmployees.includes(employee.id)}
                     onChange={() => toggleEmployee(employee.id)}
                   />
-
                   {employee.name}
                 </label>
               ))}
             </div>
           </div>
-
-          {/* Buttons */}
 
           <div className="col-span-2 flex gap-3">
             <button

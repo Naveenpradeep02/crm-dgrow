@@ -30,7 +30,7 @@ const Dashboard = () => {
       <h1 className="text-3xl font-bold mb-6">Dashboard</h1>
 
       <div className="grid grid-cols-5 gap-5">
-        <div className="bg-blue-500 text-white p-5 rounded-lg">
+        <div className="bg-gray-500 text-white p-5 rounded-lg">
           <h3>Total Employees</h3>
           <h1 className="text-4xl font-bold">{stats.employees}</h1>
         </div>

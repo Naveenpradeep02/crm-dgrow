@@ -23,14 +23,14 @@ const EmployeeLayout = ({ children }) => {
   };
   return (
     <div className="flex min-h-screen">
-      <div className="w-64 bg-slate-900 text-white p-5">
+      <div className="w-64 bg-black text-white p-5">
         <h2 className="text-2xl font-bold mb-8">Employee Panel</h2>
 
         <ul className="space-y-3">
           <li>
             <Link
               to="/employee/dashboard"
-              className="flex items-center gap-3 px-5 py-3 hover:bg-slate-800"
+              className="flex items-center gap-3 px-5 py-3 hover:bg-red-800"
             >
               <FaChartBar />
               Dashboard
@@ -39,7 +39,7 @@ const EmployeeLayout = ({ children }) => {
 
           <li>
             <Link
-              className="flex items-center gap-3 px-5 py-3 hover:bg-slate-800"
+              className="flex items-center gap-3 px-5 py-3 hover:bg-red-800"
               to="/employee/tasks"
             >
               <FaTable />
@@ -50,7 +50,7 @@ const EmployeeLayout = ({ children }) => {
           {/* <li>
             <Link
               to="/employee/profile "
-              className="flex items-center gap-3 px-5 py-3 hover:bg-slate-800"
+              className="flex items-center gap-3 px-5 py-3 hover:bg-red-800"
             >
               <FaUsers />
               Profile
@@ -59,7 +59,7 @@ const EmployeeLayout = ({ children }) => {
           <li>
             <Link
               to="/notifications"
-              className="relative flex items-center gap-3 px-5 py-3 hover:bg-slate-800"
+              className="relative flex items-center gap-3 px-5 py-3 hover:bg-red-800"
             >
               <FaBell />
               Notification
@@ -73,7 +73,7 @@ const EmployeeLayout = ({ children }) => {
           <li>
             <Link
               to="/change-password"
-              className="flex items-center gap-3 px-5 py-3 hover:bg-slate-800"
+              className="flex items-center gap-3 px-5 py-3 hover:bg-red-800"
             >
               <FaLock />
               Change Password
@@ -82,7 +82,7 @@ const EmployeeLayout = ({ children }) => {
         </ul>
       </div>
 
-      <div className="flex-1 bg-slate-100 p-6">{children}</div>
+      <div className="flex-1 bg-red-100 p-6">{children}</div>
     </div>
   );
 };
